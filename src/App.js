@@ -32,8 +32,8 @@ class App extends Component {
     let content = this.state.isFetching ? (
       <ActivityIndicator size="large" />
     ) : (
-      <UserList users={this.state.users} />
-    );
+        <UserList users={this.state.users} />
+      );
 
     return (
       <View style={styles.app}>
