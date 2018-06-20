@@ -1,39 +1,21 @@
 import React, { Component } from "react";
 import { Image, StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import UserList from "./components/UserList";
+import { fetchUsers } from "./redux/actions/userActions";
+import { connect } from "react-redux";
 
 class App extends Component {
-  constructor(props) {
-    super();
-
-    this.state = {
-      users: [],
-      isFetching: true,
-      errorMessage: null
-    };
-  }
-
-  async fetchRandomPeopleAPI() {
-    try {
-      let response = await fetch("https://randomuser.me/api/?results=15");
-      let json = await response.json();
-      console.log(json);
-      this.setState({ users: json.results, isFetching: false });
-    } catch (error) {
-      this.setState({ errorMessage: error, isFetching: false });
-    }
-  }
-
   componentDidMount() {
-    this.fetchRandomPeopleAPI();
+    this.props.fetchUsers();
   }
 
   render() {
-    let content = this.state.isFetching ? (
+    let data = this.props.data;
+    let content = data.isFeching ? (
       <ActivityIndicator size="large" />
     ) : (
-        <UserList users={this.state.users} />
-      );
+      <UserList users={data.users.json} />
+    );
 
     return (
       <View style={styles.app}>
@@ -46,7 +28,13 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    data: state
+  };
+};
+
+export default connect(mapStateToProps, { fetchUsers })(App);
 
 const styles = StyleSheet.create({
   app: {

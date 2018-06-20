@@ -4,20 +4,6 @@ import PropTypes from "prop-types";
 import Item from "./ListItem";
 
 export default class UserList extends Component {
-  constructor(props) {
-    super(props);
-
-    this.emptyContent = this.emptyContent.bind(this);
-  }
-
-  emptyContent() {
-    return (
-      <View>
-        <Text>No users...</Text>
-      </View>
-    );
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -25,7 +11,6 @@ export default class UserList extends Component {
           data={this.props.users}
           renderItem={item => this.renderItems(item)}
           scrollEnabled={true}
-          ListEmptyComponent={this.emptyContent}
         />
       </View>
     );
